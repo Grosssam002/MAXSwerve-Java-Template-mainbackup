@@ -14,8 +14,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -119,6 +121,10 @@ public class DriveSubsystem extends SubsystemBase {
     double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
     double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    SmartDashboard.putNumber("xspeedDelivered", xSpeedDelivered);
+    SmartDashboard.putNumber("yspeedDelivered", ySpeedDelivered);
+    SmartDashboard.putNumber("rotDelivered",rotDelivered);
+    SmartDashboard.putNumber("Angle",m_gyro.getAngle(IMUAxis.kZ));
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
@@ -127,6 +133,14 @@ public class DriveSubsystem extends SubsystemBase {
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
+        SmartDashboard.putNumber("statespeed0", swerveModuleStates[0].speedMetersPerSecond);
+        SmartDashboard.putNumber("stateangle0", swerveModuleStates[0].angle.getDegrees());
+        SmartDashboard.putNumber("statespeed1", swerveModuleStates[1].speedMetersPerSecond);
+        SmartDashboard.putNumber("stateangle1", swerveModuleStates[1].angle.getDegrees());
+        SmartDashboard.putNumber("statespeed2", swerveModuleStates[2].speedMetersPerSecond);
+        SmartDashboard.putNumber("stateangle2", swerveModuleStates[2].angle.getDegrees());
+        SmartDashboard.putNumber("statespeed3", swerveModuleStates[3].speedMetersPerSecond);
+        SmartDashboard.putNumber("stateangle3", swerveModuleStates[3].angle.getDegrees());
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
