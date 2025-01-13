@@ -95,8 +95,10 @@ public class MAXSwerveModule {
    *
    * @param desiredState Desired state with speed and angle.
    */
-  public void setDesiredState(SwerveModuleState desiredState) {
+  public void setDesiredState(SwerveModuleState desiredState,int modulenumber) {
     // Apply chassis angular offset to the desired state.
+    SmartDashboard.putNumber(modulenumber+"rotation", desiredState.angle.getDegrees());
+    SmartDashboard.putNumber(modulenumber+"drive",desiredState.speedMetersPerSecond);
     SwerveModuleState correctedDesiredState = new SwerveModuleState();
     correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
     correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromDegrees(m_chassisAngularOffset));
