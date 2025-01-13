@@ -110,7 +110,8 @@ public class MAXSwerveModule {
     // Command driving and turning SPARKS towards their respective setpoints.
     m_drivingClosedLoopController.setReference(correctedDesiredState.speedMetersPerSecond, ControlType.kVelocity);
     m_turningClosedLoopController.setReference(correctedDesiredState.angle.getRadians(), ControlType.kPosition);
-
+    SmartDashboard.putNumber("corrected_rotation"+modulenumber, correctedDesiredState.angle.getRadians());
+    SmartDashboard.putNumber("corrected_drive"+modulenumber,correctedDesiredState.speedMetersPerSecond);
     m_desiredState = desiredState;
   }
 
